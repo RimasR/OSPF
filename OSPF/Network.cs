@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace OSPF
 {
@@ -13,9 +14,22 @@ namespace OSPF
             routers = new List<Router>();
         }
 
-        public virtual void AddRouter(string id)
+        public Dictionary<string, string> GetList(string source)
+        {
+            foreach(Router router in routers)
+            {
+                if (source.Equals(router.GetRouterId()))
+                {
+                    return router.GetList();
+                }
+            }
+            return null;
+        }
+
+        public bool AddRouter(string id)
         {
             routers.Add(new Router(id));
+            return true;
         }
 
         public virtual bool RemoveRouter(string id)
@@ -80,7 +94,9 @@ namespace OSPF
             {
                 if (source.Equals(router.GetRouterId()))
                 {
-                    new Message(router, dest, message);
+                    Message msg = new Message(router, dest, message);
+                    Thread thread = new Thread(msg.run);
+                    thread.Start();
                     return true;
                 }
             }

@@ -14,7 +14,6 @@ namespace OSPF
             this.router = router;
             this.dest = dest;
             this.text = text;
-            run();
         }
 
         public void run()

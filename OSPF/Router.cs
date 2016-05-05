@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace OSPF
@@ -24,6 +25,11 @@ namespace OSPF
             network.addEdge(id);
             connections = new Dictionary<string, string>();
             connections.Add(id, id);
+        }
+
+        public Dictionary<string, string> GetList()
+        {
+            return connections;
         }
 
         public string GetRouterId()
@@ -107,10 +113,11 @@ namespace OSPF
 
         public void SendMessage(string dest, string text)
         {
-            Program.Write("Message '" + text + "' in router - " + id);
+            Program.Write("Zinute '" + text + "' routeryje vardu - " + id);
+            Thread.Sleep(5000);
             if (dest.Equals(id))
             {
-                Program.Write("Message '" + text + "' successfully arrived to router - " + id);
+                Program.Write("Zinute '" + text + " pasieke norima routeri vardu - " + id);
                 Program.Write(" ");
             } else
             {
